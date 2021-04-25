@@ -102,6 +102,21 @@ def mars_facts():
 def mars_images():
     url = 'https://data-class-mars-hemispheres.s3.amazonaws.com/Mars_Hemispheres/index.html'         
     browser.visit(url)
+    
+    html = browser.html
+    html_soup = soup(html, 'html.parser')
+    
+
+    img_url_rel = html_soup.find('img', class_='wide-image').get('src')
+    img_url = f'https://data-class-mars-hemispheres.s3.amazonaws.com/Mars_Hemispheres/{img_url}'
+    img_title = html_soup.find('h2', class_='title').get_text()
+    
+    hemispheres[img_url] = img_url
+    hemispheres[title] = img_title
+
+    hemisphere_image_urls.append(hemispheres)
+
+    return img_url, img_title
 
 if __name__ == "__main__":
 
